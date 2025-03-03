@@ -11,14 +11,17 @@ app.use(express.json());
 // * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = process.env.PRIVATE_APP_ACCESS;
 
+console.log(PRIVATE_APP_ACCESS);
+
 // TODO: ROUTE 1 - Create a new app.get route for the homepage to call your custom object data. Pass this data along to the front-end and create a new pug template in the views folder.
 
 // * Code for Route 1 goes here
 app.get('/', async (req, res) => {
     try {
         //call API
-        const data = await axiosHelper.getCustomObject('2-38355921', 100, 'name,favorite_character,description,hs_object_id', PRIVATE_APP_ACCESS);
-        res.render('homepage', { title: 'Favorite Anime | Integrating With HubSpot I Practicum', data: data?.results || [] });
+        const data = await axiosHelper.getCustomObject('2-41416508', 100, 'name,amount,description,hs_object_id', PRIVATE_APP_ACCESS);
+        console.log(" data?.results ", data?.results );
+        res.render('homepage', { title: 'Favorite Soap | Integrating With HubSpot I Practicum', data: data?.results || [] });
     } catch (error) {
         console.error(error);
     }
@@ -30,9 +33,9 @@ app.get('/update-cobj/:id?', async (req, res) => {
     try {
         let data = null;
         if(req.params?.id){
-            data = await axiosHelper.getCustomObjectById('2-38355921', req.params.id, 'name,favorite_character,description,hs_object_id', PRIVATE_APP_ACCESS);
+            data = await axiosHelper.getCustomObjectById('2-41416508', req.params.id, 'name,amount,description,hs_object_id', PRIVATE_APP_ACCESS);
         }
-        res.render('updates', { title: 'Update Favorite Anime Form | Integrating With HubSpot I Practicum', data: data });
+        res.render('updates', { title: 'Update Favorite Soap Form | Integrating With HubSpot I Practicum', data: data });
     } catch (error) {
         console.error(error);
     }
@@ -46,12 +49,12 @@ app.post('/update-cobj/:id?', async (req, res) => {
     try {
         //call API
         if(req.params?.id){
-            await axiosHelper.updateCustomObject('2-38355921', req.params.id, req.body, PRIVATE_APP_ACCESS);
+            await axiosHelper.updateCustomObject('2-41416508', req.params.id, req.body, PRIVATE_APP_ACCESS);
         }else{
-            await axiosHelper.addCustomObject('2-38355921', req.body, PRIVATE_APP_ACCESS);
+            await axiosHelper.addCustomObject('2-41416508', req.body, PRIVATE_APP_ACCESS);
         }
         res.redirect('/');
-        // res.render('homepage', { title: 'Favorite Anime | Integrating With HubSpot I Practicum', data });
+        // res.render('homepage', { title: 'Favorite Soap | Integrating With HubSpot I Practicum', data });
     } catch (error) {
         console.error(error);
     }
@@ -64,7 +67,7 @@ app.get('/delete-cobj/:id', async (req, res) => {
     try {
         //call API
         if(req.params?.id){
-            await axiosHelper.deleteCustomObject('2-38355921', req.params.id, PRIVATE_APP_ACCESS);
+            await axiosHelper.deleteCustomObject('2-41416508', req.params.id, PRIVATE_APP_ACCESS);
         }
         res.redirect('/');
     } catch (error) {

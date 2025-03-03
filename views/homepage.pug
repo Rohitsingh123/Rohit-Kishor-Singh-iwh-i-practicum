@@ -1,0 +1,37 @@
+html
+    head 
+        title= `${title}`
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="stylesheet", href="/css/style.css")
+        link(rel='stylesheet', href='https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css')
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+    body    
+        div.container
+            h1 Favorite Soap
+            a(href="/update-cobj", class="add-btn") + Add Soap
+            br
+            div.table-container
+                table#soapTable
+                    thead
+                        tr
+                            th Name
+                            th Amount
+                            th Description
+                            th Actions
+                    tbody
+                        each soap in data
+                            tr
+                                td= soap.properties.name
+                                td= soap.properties.amount
+                                td= soap.properties.description
+                                td.actions
+                                    a(href=`/update-cobj/${soap.properties.hs_object_id}`, title="Edit", class="edit-btn")
+                                        i.fa.fa-edit
+                                    a(href=`/delete-cobj/${soap.properties.hs_object_id}`, title="Delete", class="delete-btn", onclick="return confirm('Are you sure you want to delete this?')")
+                                        i.fa.fa-trash
+        script.
+            $(document).ready(function() {
+                $('#soapTable').DataTable();
+            });

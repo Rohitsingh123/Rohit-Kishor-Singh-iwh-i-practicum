@@ -1,0 +1,49 @@
+html
+  head 
+    title= `${title}`
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="/css/style.css")
+  body    
+    div.container
+      h1= data ? 'Update Favorite Soap' : 'Add Favorite Soap'
+      a(href="/", class="back-link") ← Return to Homepage
+
+      div.form-container
+        form(action= data ? `/update-cobj/${data.properties.hs_object_id}` : "/update-cobj", method="POST", class="soap-form")
+          table
+            tbody
+              tr
+                td
+                  label(for="name") Name: 
+                    span.required *  
+                td
+                  input(
+                    type="text", 
+                    name="name", 
+                    required, 
+                    class="rounded-input", 
+                    value= data ? data.properties.name : ''
+                  )
+              tr
+                td
+                  label(for="amount") Amount: 
+                    span.required *
+                td
+                  input(
+                    type="number", 
+                    name="amount", 
+                    required, 
+                    class="rounded-input", 
+                    value= data ? data.properties.amount : ''
+                  )
+              tr
+                td
+                  label(for="description") Description:
+                td
+                  textarea(
+                    name="description", 
+                    id="description", 
+                    class="rounded-input"
+                  )= data ? data.properties.description : ''
+          div.button-container
+            button(type="submit", class="rounded-button")= data ? 'Update' : 'Add'
